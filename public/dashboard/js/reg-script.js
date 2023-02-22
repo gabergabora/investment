@@ -7,7 +7,8 @@ var fields = {
     email: null,
     password: null,
     cpassword: null,
-    consent: null
+    consent: null,
+    upline: null
 }
 
 function getVal(field) {
