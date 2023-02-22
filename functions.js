@@ -12,7 +12,7 @@ const logMessage = (msg) => {
 const getTransactions = async (user_id) => {
     //console.log("get transactions");
     let transactions = []
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/transactions").then(res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/transactions").then(res => {
         if (res.data.length) {
             if (user_id) {
                 transactions = res.data.filter(d => d.created_by.id === user_id)
@@ -29,7 +29,7 @@ const getTransactions = async (user_id) => {
 const getAllTransactions = async (status) => {
     //console.log("get transactions");
     let transactions = []
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/transactions").then(async res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/transactions").then(async res => {
         if (res.data.length) {
             if (status === "others") {
                 transactions = res.data.filter(d => d.status !== "pending")
@@ -51,7 +51,7 @@ const getAllTransactions = async (status) => {
 const getAccounts = async (user_id) => {
     //console.log("get accounts");
     let accounts = []
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/accounts").then(res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/accounts").then(res => {
         logMessage("accounts", user_id);
         //
         if (res.data.length) {
@@ -183,7 +183,7 @@ const addReferralBenefits = async (upline, amount) => {
     let percentage = referral_bonus;
     let benefit = amount * percentage;
 
-    await axios.put(process.env["SERVER_BASE_URL"] + "/api/accounts", {
+    await axios.put(process.env["SERVER_PROD_BASE_URL"] + "/api/accounts", {
         id: upline.id,
         balance: upline.balance + benefit
     }).then(res => {
@@ -197,7 +197,7 @@ const requestDepositConfirmation = () => {
 
 const getDownlines = async (ref_code) => {
     let users = []
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/users?upline=" + ref_code).then(res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/users?upline=" + ref_code).then(res => {
 
         users = res.data;
     }).catch((err) => console.log("Get downlines error", err))
@@ -214,7 +214,7 @@ const getRefProfits = (transactions) => {
 
 const getNotifications = async (user_id) => {
     let notifications = { data: [], unread_count: 0 }
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/notifications?user=" + user_id).then(res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/notifications?user=" + user_id).then(res => {
         if (res.data.length) {
             notifications["unread_count"] = res.data.filter(n => n.status === "pending").length
             console.log("notifications['unread_count']", notifications["unread_count"]);
@@ -239,7 +239,7 @@ const timeDiff = (date, return_type) => {
 const getUplineDetails = async (code) => {
     let upline_details;
     await axios.get(
-        `${process.env["SERVER_BASE_URL"]}/api/users?code=${code}`,
+        `${process.env["SERVER_PROD_BASE_URL"]}/api/users?code=${code}`,
         // {headers}
     ).then(async res => {
         upline_details = res.data.length && res.data[0] || {}
@@ -316,7 +316,7 @@ const depositROIs = async () => {
         }
 
         if (is_account_updated) {
-            await axios.put(process.env["SERVER_BASE_URL"] + "/api/accounts/" + account._id, {
+            await axios.put(process.env["SERVER_PROD_BASE_URL"] + "/api/accounts/" + account._id, {
                 id: account._id,
                 investments: account.investments
             }, {
@@ -333,7 +333,7 @@ const depositROIs = async () => {
                 //     currency: account.currency
                 // }
                 /*axios.post(
-                    `${process.env["SERVER_BASE_URL"]}/api/transactions`, 
+                    `${process.env["SERVER_PROD_BASE_URL"]}/api/transactions`, 
                     post_transactions_data,
                     {
                         "Content-type": "application/json",
@@ -344,7 +344,7 @@ const depositROIs = async () => {
                     response.success = true;
                     response.data = resp.data
                     await axios.post(
-                        `${process.env["SERVER_BASE_URL"]}/api/notifications`, 
+                        `${process.env["SERVER_PROD_BASE_URL"]}/api/notifications`, 
                         {
                             user: account.created_by,
                             title: `ROI profit deposited.`,
@@ -382,7 +382,7 @@ const updateSessionData = (prev, item) => {
 
 const getUsers = async () => {
     let users = []
-    await axios.get(process.env["SERVER_BASE_URL"] + "/api/users").then(res => {
+    await axios.get(process.env["SERVER_PROD_BASE_URL"] + "/api/users").then(res => {
         users = res.data
     }).catch((err) => console.log("Get users error", err))
     return users
