@@ -68,20 +68,38 @@ for (let field in fields) {
     document.getElementsByName(field)[0].addEventListener("keyup", toggleSubmitRegBtn);
 }
 
-const handleSubmitClick = () => {
+const handleSubmitClick = async () => {
     console.log("in here");
     submitBtn.setAttribute("disabled", true);
     submitBtn.textContent = "Please wait...";
-//    let interval = window.setInterval(()=> {
-//         console.log("inside interval");
-//         var element = document.getElementsByTagName("body")[0]
-//         var numberOfChildren = element.children.length 
+    console.log({fields});
+    await fetch("/submit-registration", {
+        method: "POST",
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields),
     
-//         if(numberOfChildren === 1 && element.children.innerHTML.includes("OK.")){
-//             window.clearInterval(interval)
-//             window.location.href = "/login"
-//         }
-//     }, 3000)
+      }).then(res => {
+        console.log({ res });
+        window.location.href = "/login";
+        return res.json();
+      })/*.then(d => {
+        console.log({ d })
+     //   if (d.success) {
+       
+          //console.log("d.redirect", d.redirect);
+         window.location.href = "/login";
+       
+        // } else {
+        //   document.getElementById("server-err").style.display = "block";
+        //   document.getElementById("server-err").innerHTML = d.error
+        // }
+    
+      }
+      )*/
+        .catch(err => {
+          signInBtn.removeAttribute("disabled");
+          console.log(err)
+        })
 }
 
 
