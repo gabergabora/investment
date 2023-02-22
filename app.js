@@ -81,14 +81,17 @@ var website_url = user_board_url = server_base_url = isProd
 })();
 
 const getBTCPrice = () => {
-    axios.get("https://www.blockchain.com/explorer/_next/data/ae6d6d85-prod/prices.json").then(res => {
+    axios.get(
+        /*"https://www.blockchain.com/explorer/_next/data/ae6d6d85-prod/prices.json"*/
+        "https://api.polygon.io/v2/aggs/ticker/X:BTCUSD/prev?adjusted=true&apiKey=oTrNdaXhAZXLaP4T2xQhvbO9XPbepgjC"
+        ).then(res => {
 
-        current_btc_price = res.data.pageProps.marketData.btcPrice
+        current_btc_price = res.data.results[0]['c']//.pageProps.marketData.btcPrice
         console.log("price", current_btc_price);
     }).catch(err => console.log(err))
 }
-
-setTimeout(getBTCPrice, 1000 * 60 * 60 * 5)
+getBTCPrice()
+//setTimeout(getBTCPrice, 1000 * 60 * 60 * 5)
 
 app.use(
     session({
