@@ -206,7 +206,8 @@ const getDownlines = async (ref_code) => {
 
 const getRefProfits = (transactions) => {
     let referrals = transactions.filter(t => t.type === "referral_bonus");
-    let total = referrals ? referrals.reduce((a, b) => a.amount + b.amount, 0) : 0;
+    let total = referrals ? referrals.reduce((a, b) => a + b.amount, 0) : 0;
+    console.log({total});
     return {
         referrals, total
     }
