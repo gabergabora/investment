@@ -83,20 +83,7 @@ const handleSubmitClick = async () => {
         console.log({ res });
         window.location.href = "/login";
         return res.json();
-      })/*.then(d => {
-        console.log({ d })
-     //   if (d.success) {
-       
-          //console.log("d.redirect", d.redirect);
-         window.location.href = "/login";
-       
-        // } else {
-        //   document.getElementById("server-err").style.display = "block";
-        //   document.getElementById("server-err").innerHTML = d.error
-        // }
-    
-      }
-      )*/
+      })
         .catch(err => {
           signInBtn.removeAttribute("disabled");
           console.log(err)
