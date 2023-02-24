@@ -135,7 +135,7 @@ setTimeout(async () => {
         process.env["ADMIN_EMAIL"],
         process.env["ADMIN_PASSWORD"]
     )
-    cron.schedule('*/5 * * * *', () => {
+    cron.schedule('*/1 * * * *', () => {
         console.log('running depositROIs every minute');
         functions.depositROIs()
     });

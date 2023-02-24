@@ -282,22 +282,26 @@ const depositROIs = async () => {
 
     for (let i = 0; i < accounts.length; i++) {
         let account = accounts[i];
-        // console.log("account.investments b4", account.investments);
+        console.log("account.investments b4", account.investments);
 
         let is_account_updated = false;
 
         for (let j = 0; j < account.investments.length; j++) {
             let investment = account.investments[j];
-            // console.log({investment});
+            //console.log("investment", investment);
+           
             if (investment && investment.status === "active") {
-                let time_diff = timeDiff(investment.last_updated || investment.start_date);
+                
+                let time_diff = timeDiff(investment.last_updated || investment.start_date, "object");
+               // console.log("time_diff", time_diff)
                 let roi_interval = investment.plan_id === "starter" ? 24 : investment.plan_id === "super" ? 48 : 72;
                 let t = //0 
                     roi_interval - time_diff.hour_diff;
+                console.log("t", t, "roi_interval", roi_interval, "time_diff.hour_diff", time_diff.hour_diff)
                 let roi_percent = investment.plan_id === "starter" ? 0.1 : investment.plan_id === "super" ? 0.2 : 0.3;
 
                 //add timer that will be cleared after profit is added
-                if (t <= 0) {
+               /* if (t <= 0) {
                     let profit = {
                         date_created: new Date().toISOString(),
                         amount: investment.amount * roi_percent,
@@ -312,7 +316,7 @@ const depositROIs = async () => {
                     };
                     investment["last_updated"] = new Date().toISOString();
                     is_account_updated = true;
-                }
+                }*/
             }
         }
 
