@@ -301,7 +301,7 @@ const depositROIs = async () => {
                 let roi_percent = investment.plan_id === "starter" ? 0.1 : investment.plan_id === "super" ? 0.2 : 0.3;
 
                 //add timer that will be cleared after profit is added
-               /* if (t <= 0) {
+                if (t <= 0) {
                     let profit = {
                         date_created: new Date().toISOString(),
                         amount: investment.amount * roi_percent,
@@ -316,7 +316,7 @@ const depositROIs = async () => {
                     };
                     investment["last_updated"] = new Date().toISOString();
                     is_account_updated = true;
-                }*/
+                }
             }
         }
 
